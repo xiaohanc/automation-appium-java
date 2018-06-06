@@ -45,7 +45,7 @@ can using
 
 ## Test Methods
 Test methods consists of a class method with the @Test annotation
-```any
+```Java
    @Test
    public void myTestMethod() {
     
@@ -53,7 +53,7 @@ Test methods consists of a class method with the @Test annotation
 ```
 
 Here we can use the PageObjects in the following form:
-```any
+```Java
    @Test
    public void myTestMethod() {
     PageFactory.WelcomeOverlay().waitForViewToLoad(driver);
