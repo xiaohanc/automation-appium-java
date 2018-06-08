@@ -1,32 +1,29 @@
+package vice.tests;
+
+import com.qa.vice.AppiumProcess;
 import driver.PageFactory;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Test;
+import io.qameta.allure.Description;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Test;
 import test.BaseTest;
 import utils.Appium;
 import utils.Driver;
 
-/**
- * TestClass must inherit from BaseTest
- * and must implement @AfterClass
- */
-public class SampleTest extends BaseTest {
-    public static com.qa.vice.AppiumProcess appiumProcess;
+public class Sample2Test extends BaseTest {
+    public static AppiumProcess appiumProcess;
     public static String UDID;
 
-    /**
-     * tearDownClass is invoked after all test from this TestClass has been executed,
-     * here, we kill the created appium process and frees the android device
-     */
-    @AfterClass
+    @AfterClass(description = "Stopping Appium Server and Freeing Device")
     public static void tearDownClass() {
         Appium.killServer(appiumProcess);
         Driver.freeUDID(UDID);
     }
 
-    @Test
+    @Test(description = "Test Name, Test 1, Class 2")
+    @Description("Description for Test 1, this test will pass")
     public void testOne() {
-        System.out.println("starting SampleTest testOne");
+        //->  WelcomeOverlay welcomeOverlay = getInstance(PageFactory.ReadSectionView.class);
 
         PageFactory.WelcomeOverlay().waitForViewToLoad(driver);
         PageFactory.WelcomeOverlay().skipButton.click();
@@ -35,26 +32,24 @@ public class SampleTest extends BaseTest {
         PageFactory.ReadSectionView().readButton.click();
 
         PageFactory.ReadSectionView().popularTab.click();
-
-        Assert.assertEquals(PageFactory.ReadSectionView().popularTab.getText(), "MENTIRA");
+        Assert.assertEquals(PageFactory.ReadSectionView().popularTab.getText(), "POPULAR");
         Assert.assertEquals(PageFactory.ReadSectionView().latestTab.getText(), "LATEST");
-        System.out.println("finishing SampleTest testOne");
-
     }
 
-    @Test
+    @Test(description = "Test Name, Test 12, Class 2")
+    @Description("Description for Test 2, this test will fail")
     public void testTwo() {
-        System.out.println("starting SampleTest testTwo");
+
         PageFactory.WelcomeOverlay().waitForViewToLoad(driver);
         PageFactory.WelcomeOverlay().skipButton.click();
+
         PageFactory.ReadSectionView().waitForViewToLoad(driver);
         PageFactory.ReadSectionView().readButton.click();
 
         PageFactory.ReadSectionView().popularTab.click();
 
         Assert.assertEquals(PageFactory.ReadSectionView().popularTab.getText(), "POPULAR");
-        Assert.assertEquals(PageFactory.ReadSectionView().latestTab.getText(), "LATEST");
-        System.out.println("finishing SampleTest testTwo");
+        Assert.assertEquals(PageFactory.ReadSectionView().latestTab.getText(), "MENTIRA");
     }
 
 

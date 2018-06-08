@@ -23,20 +23,24 @@ public class Driver {
 
     /**
      * Gets the next available UDID and waits for the device to available
+     *
      * @return String
      * @throws InterruptedException
      */
-    public static String getNextAvailableUDID() throws InterruptedException {
-        if (UDIDs == null && !isBusy) {
+    public static String getNextAvailableUDID() throws Exception {
+        Thread.sleep((long) (Math.random() * 1000));
+
+        if ((UDIDs == null || UDIDs.size() == 0) && !isBusy) {
             readUDIDs();
         }
 
         while (isBusy) {
-            Thread.sleep((long) (Math.random() * 200));
+            Thread.sleep((long) (Math.random() * 1000));
         }
 
         String nextAvailableUUID = null;
         do {
+            Thread.sleep((long) ((Math.random() + 1) * 1000));
             for (UDID udid : UDIDs) {
                 if (!udid.lock) {
                     nextAvailableUUID = udid.UDID;
@@ -44,7 +48,6 @@ public class Driver {
                     break;
                 }
             }
-            Thread.sleep((long) ( (Math.random() +1)* 200));
         } while (nextAvailableUUID == null);
 
         return nextAvailableUUID;
@@ -72,7 +75,13 @@ public class Driver {
             udid.UDID = adbDevice;
             UDIDs.add(udid);
         });
+
         isBusy = false;
+
+        if (UDIDs.size() == 0) {
+            System.err.println("No Devices found");
+            System.exit(-1);
+        }
     }
 }
 

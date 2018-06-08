@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="MySuite" verbose="1" parallel="classes" thread-count="8">
+    <test name="Regression1">
+        <packages>
+            <package name="vice.tests"/>
+        </packages>
+    </test>
+</suite>
