@@ -7,12 +7,11 @@ import org.openqa.selenium.WebElement;
 public class ElementListener implements ElementEventListener {
     @Override
     public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
-        ViceReporter.log(Action.BeforeClick, webElement, webDriver);
     }
 
     @Override
     public void afterClickOn(WebElement webElement, WebDriver webDriver) {
-        ViceReporter.log(Action.AfterClick, webElement, webDriver);
+        ViceReporter.log(Action.Click, webElement, webDriver);
     }
 
     @Override

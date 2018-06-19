@@ -1,12 +1,7 @@
 package driver;
 
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.events.EventFiringWebDriverFactory;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.pagefactory.iOSFindBy;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.lang.reflect.Field;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class BasePageObject {
 
@@ -28,7 +22,7 @@ public class BasePageObject {
      */
     public void waitForViewToLoad(AndroidDriver driver) {
         this.driver = driver;
-
+        ViceReporter.Step(String.format("Waiting for %s to load", this.getClass().getSimpleName()));
         PageFactory.initElements(new AppiumFieldDecorator(this.driver, Duration.ofSeconds(30)), this);
 
         for (Field declaredField : this.getClass().getDeclaredFields()) {

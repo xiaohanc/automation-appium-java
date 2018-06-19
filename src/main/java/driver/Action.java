@@ -1,9 +1,7 @@
 package driver;
 
 public enum Action {
-    BeforeClick("Attempting to click"),
-
-    AfterClick("Clicked successful");
+    Click("Click");
 
     private String name;
 

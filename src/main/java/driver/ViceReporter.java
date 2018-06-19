@@ -1,6 +1,7 @@
 package driver;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -13,15 +14,23 @@ import java.nio.file.Files;
 public final class ViceReporter {
 
     public static void log(Action action, WebElement element, WebDriver webDriver) {
+        File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         try {
-            File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-            String verboseAction = action.getStringValue() + " on " + element.toString().split(" -> ")[1].replace("]", "");
-            Allure.addAttachment(verboseAction, Files.newInputStream(scrFile.toPath()));
+            String elementLocator = element.toString().split(" -> ")[1].replace("]", "");
+
+            customStep(action.getStringValue(), elementLocator, scrFile);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
+    @Step("{0}")
+    public static void Step(String step) {
+    }
+
+    @Step("{0} on {1}")
+    private static void customStep(String action, String element, File screenshot) throws IOException {
+        Allure.addAttachment(element, Files.newInputStream(screenshot.toPath()));
+    }
 
 }

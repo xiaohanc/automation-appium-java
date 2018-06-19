@@ -2,8 +2,9 @@ package vice.tests;
 
 import com.qa.vice.AppiumProcess;
 import driver.PageFactory;
+import driver.ViceAssert;
+import driver.ViceReporter;
 import io.qameta.allure.Description;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import test.BaseTest;
@@ -24,16 +25,17 @@ public class Sample2Test extends BaseTest {
     @Description("Description for Test 1, this test will pass")
     public void testOne() {
         //->  WelcomeOverlay welcomeOverlay = getInstance(PageFactory.ReadSectionView.class);
-
         PageFactory.WelcomeOverlay().waitForViewToLoad(driver);
         PageFactory.WelcomeOverlay().skipButton.click();
 
         PageFactory.ReadSectionView().waitForViewToLoad(driver);
         PageFactory.ReadSectionView().readButton.click();
 
+        ViceReporter.Step("Starting Assertions");
+
         PageFactory.ReadSectionView().popularTab.click();
-        Assert.assertEquals(PageFactory.ReadSectionView().popularTab.getText(), "POPULAR");
-        Assert.assertEquals(PageFactory.ReadSectionView().latestTab.getText(), "LATEST");
+        ViceAssert.assertEquals(PageFactory.ReadSectionView().popularTab.getText(), "POPULAR");
+        ViceAssert.assertEquals(PageFactory.ReadSectionView().latestTab.getText(), "LATEST");
     }
 
     @Test(description = "Test Name, Test 12, Class 2")
@@ -48,8 +50,10 @@ public class Sample2Test extends BaseTest {
 
         PageFactory.ReadSectionView().popularTab.click();
 
-        Assert.assertEquals(PageFactory.ReadSectionView().popularTab.getText(), "POPULAR");
-        Assert.assertEquals(PageFactory.ReadSectionView().latestTab.getText(), "MENTIRA");
+        ViceReporter.Step("Starting Assertions");
+
+        ViceAssert.assertEquals(PageFactory.ReadSectionView().popularTab.getText(), "POPULAR");
+        ViceAssert.assertEquals(PageFactory.ReadSectionView().latestTab.getText(), "MENTIRA");
     }
 
 
